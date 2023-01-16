@@ -20,12 +20,14 @@ class AdminSiteTests(TestCase):
         )
         self.client.force_login(self.admin_user)
         self.user = get_user_model().objects.create_user(
-            email="user@example.com", password="testpass123", name="Test User"
+            email="user@example.com",
+            password="testpass123",
+            name="Test User",
         )
 
     def test_user_list(self):
         """Test that users are listed on page"""
-        url = reverse("admin:core_user_chagelist")
+        url = reverse("admin:core_user_changelist")
         res = self.client.get(url)
 
         self.assertContains(res, self.user.name)
