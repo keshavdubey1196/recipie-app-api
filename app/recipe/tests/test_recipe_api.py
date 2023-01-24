@@ -16,14 +16,14 @@ from recipe.serializers import RecipeSerializer
 
 RECIPE_URL = reverse("recipe:recipe-list")
 
-
+# This is a helper function to create test recipes for testing purposes
 def create_recipe(user, **params):
     """Createa and return a sample recipe"""
     defaults = {
         "title": "Sample recipe title",
         "time_minutes": 22,
         "price": Decimal("5.25"),
-        "description": "Sample recipe description",
+        "description": "Sample description",
         "link": "http://example.com/recipe.pdf",
     }
     defaults.update(params)
@@ -53,6 +53,7 @@ class PrivateRecipeAPITests(TestCase):
             "user@example.com",
             "testpass123",
         )
+        self.client.force_authenticate(self.user)
 
     def test_retrieve_recipes(self):
         """Test retrieving a list of recipes"""
@@ -68,7 +69,7 @@ class PrivateRecipeAPITests(TestCase):
 
     def test_recipe_list_limited_to(self):
         """Test list of recipe is limited to authenticated user"""
-        other_user = get_user_model().objects.creat_user(
+        other_user = get_user_model().objects.create_user(
             "other@example.com",
             "password123",
         )
