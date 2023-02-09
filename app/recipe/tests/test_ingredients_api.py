@@ -67,7 +67,10 @@ class PrivateIngredientsApiTests(TestCase):
         """Test list of ingredients is limited to authenticated user"""
         user2 = create_user(email="user2@example.com")
         Ingredient.objects.create(user=user2, name="salt")
-        ingredient = Ingredient.objects.create(user=self.user, name="Pepper")
+        ingredient = Ingredient.objects.create(
+            user=self.user,
+            name="Pepper",
+        )
 
         res = self.client.get(INGREDIENTS_URL)
 
@@ -78,7 +81,10 @@ class PrivateIngredientsApiTests(TestCase):
 
     def test_update_ingredient(self):
         """Test updating an ingredient"""
-        ingredient = Ingredient.objects.create(user=self.user, name="Cilantro")
+        ingredient = Ingredient.objects.create(
+            user=self.user,
+            name="Cilantro",
+        )
 
         payload = {"name": "Coriander"}
         url = detail_url(ingredient.id)
@@ -90,7 +96,10 @@ class PrivateIngredientsApiTests(TestCase):
 
     def test_delete_ingredient(self):
         """Test deleting an ingredient"""
-        ingredient = Ingredient.objects.create(user=self.user, name="KaliMirch")
+        ingredient = Ingredient.objects.create(
+            user=self.user,
+            name="KaliMirch",
+        )
 
         url = detail_url(ingredient.id)
         res = self.client.delete(url)
